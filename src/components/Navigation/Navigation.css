@@ -1,0 +1,118 @@
+.navigation {
+  display: none;
+  margin: 0 auto;
+  position: fixed;
+  top: 0;
+  width: 786px;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.3);
+  z-index: 2;
+}
+.navigation__links {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background-color: #202020;
+  width: 520px;
+  height: 773px;
+  display: flex;
+  flex-direction: column;
+  padding-top: 159px;
+  padding-bottom: 92px;
+  z-index: 1;
+}
+.navigation__close-button {
+  position: absolute;
+  top: 22.44px;
+  right: 22.44px;
+  background-image: url(../../images/close-button.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+  width: 22px;
+  height: 22px;
+  border: 0;
+  background-color: #202020;
+  z-index: 2;
+}
+.navigation__close-button:hover {
+  opacity: 0.5;
+  transition: linear 0.3s;
+}
+.navigation__link {
+  text-decoration: none;
+  font-family: Inter;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 22px;
+  text-align: center;
+  margin: 0 auto 28px;
+  color: #ffffff;
+  padding: 0 0 4px;
+  cursor: pointer;
+}
+.navigation__link:hover {
+  opacity: 0.5;
+  transition: linear 0.3s;
+}
+.navigation__link:nth-child(3) {
+  margin-bottom: 0;
+}
+.navigation__link_active {
+  border-bottom: solid 2px #ffffff;
+}
+.navigation__link_account {
+  font-family: Inter;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 16px;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  margin: auto auto 92px;
+  height: 30px;
+}
+.navigation__link_account:hover {
+  opacity: 0.5;
+  transition: linear 0.3s;
+}
+.navigation__link_account_logo {
+  background-color: #313131;
+  width: 30px;
+  height: 30px;
+  border-radius: 6px;
+  margin-left: 13px;
+  background-repeat: no-repeat;
+  background-position: 50%;
+  background-image: url(../../images/Account-icon.svg);
+}
+@media screen and (min-width: 768px) and (max-width: 1279px) {
+  .navigation {
+    display: flex;
+  }
+}
+@media screen and (min-width: 320px) and (max-width: 767px) {
+  .navigation {
+    display: flex;
+    position: fixed;
+    width: 320px;
+    height: 780px;
+  }
+  .navigation__links {
+    width: 330px;
+    padding: 144px 0 44px;
+  }
+  .navigation__close-button {
+    top: 13.44px;
+    right: 13.44px;
+  }
+  .navigation__link {
+    margin-bottom: 24px;
+    padding-bottom: 7px;
+  }
+  .navigation__link_account {
+    margin-bottom: 48px;
+  }
+}
