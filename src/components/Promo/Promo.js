@@ -1,4 +1,3 @@
-import { Link } from 'react-router-dom';
 import './Promo.css';
 import PromoLogo from '../../images/Promo-logo.svg'
 
@@ -16,9 +15,9 @@ function Promo() {
                 </div>
                 <img alt="Логотип" src={PromoLogo} className="promo__wall_info_logo" />
             </div>
-            <Link to="https://github.com/DesOnnit/movies-explorer-frontend" className="promo__link">
+            <a href="https://github.com/DesOnnit/movies-explorer-frontend" className="promo__link">
                 Узнать больше
-            </Link>
+            </a>
         </div>
     )
 }
