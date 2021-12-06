@@ -2,6 +2,8 @@
   display: flex;
   justify-content: space-between;
   height: 74px;
+  background-color: #202020;
+  padding: 0 70px;
 }
 .header__link {
   text-decoration: none;
@@ -17,7 +19,7 @@
   margin: auto 0;
 }
 .header__info_title {
-  font-family: Inter;
+  font-family: Inter, Arial, Helvetica, sans-serif;
   font-style: normal;
   font-weight: normal;
   font-size: 14px;
@@ -45,7 +47,7 @@
 }
 .header__link_account {
   display: flex;
-  font-family: Inter;
+  font-family: Inter, Arial, Helvetica, sans-serif;
   font-style: normal;
   font-weight: normal;
   font-size: 14px;
@@ -74,6 +76,16 @@
 .header__button:hover {
   opacity: 0.5;
   transition: linear 0.3s;
+}
+@media screen and (min-width: 768px) and (max-width: 1279px){
+  .header{
+    padding: 0 30px;
+  }
+}
+@media screen and (min-width: 320px) and (max-width: 767px){
+  .header{
+    padding: 0 14px;
+  }
 }
 @media screen and (min-width: 320px) and (max-width: 1279px) {
   .header__info {

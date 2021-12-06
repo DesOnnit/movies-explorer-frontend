@@ -1,7 +1,9 @@
 .search-form {
-  margin: 80px auto 30px;
-  display: flex;
-  justify-content: space-between;
+  padding-top: 80px;
+  margin-bottom: 30px;
+  display: grid;
+  grid-template-columns: 1fr 70px;
+  column-gap: 10px;
   align-items: center;
 }
 .search-form__input {
@@ -9,8 +11,7 @@
   border: 0;
   border-radius: 4px;
   padding: 15px 0 15px 22px;
-  width: 1060px;
-  font-family: Inter;
+  font-family: Inter, Arial, Helvetica, sans-serif;
   font-style: normal;
   font-weight: normal;
   font-size: 14px;
@@ -19,9 +20,8 @@
   outline-color: none;
 }
 .search-form__btn {
-  margin-left: 10px;
   padding: 13px 5px;
-  font-family: Inter;
+  font-family: Inter, Arial, Helvetica, sans-serif;
   font-style: normal;
   font-weight: 500;
   font-size: 12px;
@@ -30,7 +30,6 @@
   color: #ffffff;
   background: #4285f4;
   border-radius: 3px;
-  width: 70px;
   border: 0;
   height: 44px;
   cursor: pointer;
@@ -47,7 +46,7 @@
   margin: 0 auto 39px;
 }
 .search-form__checkbox_text {
-  font-family: Inter;
+  font-family: Inter, Arial, Helvetica, sans-serif;
   font-style: normal;
   font-weight: normal;
   font-size: 12px;

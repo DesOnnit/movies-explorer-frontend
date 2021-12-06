@@ -3,7 +3,7 @@
   margin: 0;
 }
 .about-project__title {
-  font-family: Inter;
+  font-family: Inter, Arial, Helvetica, sans-serif;
   font-style: normal;
   font-weight: normal;
   font-size: 22px;
@@ -23,7 +23,7 @@
   max-width: 1140px;
 }
 .about-project__info_title {
-  font-family: Inter;
+  font-family: Inter, Arial, Helvetica, sans-serif;
   font-style: normal;
   font-weight: normal;
   font-size: 20px;
@@ -33,7 +33,7 @@
   margin: 0;
 }
 .about-project__info_subtitle {
-  font-family: Inter;
+  font-family: Inter, Arial, Helvetica, sans-serif;
   font-style: normal;
   font-weight: normal;
   font-size: 14px;
@@ -48,7 +48,7 @@
   padding-bottom: 96px;
 }
 .about-project__time_title {
-  font-family: Inter;
+  font-family: Inter, Arial, Helvetica, sans-serif;
   font-style: normal;
   font-weight: normal;
   font-size: 14px;
@@ -66,7 +66,7 @@
   background: #303030;
 }
 .about-project__time_subtitle {
-  font-family: Inter;
+  font-family: Inter, Arial, Helvetica, sans-serif;
   font-style: normal;
   font-weight: 500;
   font-size: 14px;

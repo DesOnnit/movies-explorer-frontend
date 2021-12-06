@@ -2,7 +2,7 @@
   background-color: #202020;
 }
 .about-me__title {
-  font-family: Inter;
+  font-family: Inter, Arial, Helvetica, sans-serif;
   font-style: normal;
   font-weight: normal;
   font-size: 22px;
@@ -28,7 +28,7 @@
   border-radius: 10px;
 }
 .about-me__info_title {
-  font-family: Inter;
+  font-family: Inter, Arial, Helvetica, sans-serif;
   font-style: normal;
   font-weight: normal;
   font-size: 50px;
@@ -38,7 +38,7 @@
   margin: 0;
 }
 .about-me__info_subtitle {
-  font-family: Inter;
+  font-family: Inter, Arial, Helvetica, sans-serif;
   font-style: normal;
   font-weight: 500;
   font-size: 18px;
@@ -48,7 +48,7 @@
   margin: 18px 0 26px;
 }
 .about-me__info_life {
-  font-family: Inter;
+  font-family: Inter, Arial, Helvetica, sans-serif;
   font-style: normal;
   font-weight: normal;
   font-size: 14px;
@@ -61,7 +61,7 @@
 .about-me__info_link {
   align-items: center;
   text-decoration: none;
-  font-family: Inter;
+  font-family: Inter, Arial, Helvetica, sans-serif;
   font-style: normal;
   font-weight: 500;
   font-size: 14px;

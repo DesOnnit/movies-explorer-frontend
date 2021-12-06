@@ -1,9 +1,7 @@
-import Header from '../Header/Header';
 import './Profile.css';
 function Profile() {
     return (
         <div className="profile">
-            <Header />
             <p className="profile__title">
                 Привет, Вадим!
             </p>

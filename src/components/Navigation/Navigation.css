@@ -1,12 +1,16 @@
 .navigation {
-  display: none;
+  display: flex;
   margin: 0 auto;
   position: fixed;
   top: 0;
-  width: 786px;
+  right: 0;
+  width: 100%;
   height: 100vh;
   background: rgba(0, 0, 0, 0.3);
   z-index: 2;
+}
+.navigation_hiden {
+  display: none;
 }
 .navigation__links {
   position: absolute;
@@ -40,7 +44,7 @@
 }
 .navigation__link {
   text-decoration: none;
-  font-family: Inter;
+  font-family: Inter, Arial, Helvetica, sans-serif;
   font-style: normal;
   font-weight: 500;
   font-size: 18px;
@@ -62,7 +66,7 @@
   border-bottom: solid 2px #ffffff;
 }
 .navigation__link_account {
-  font-family: Inter;
+  font-family: Inter, Arial, Helvetica, sans-serif;
   font-style: normal;
   font-weight: 500;
   font-size: 14px;
@@ -88,18 +92,13 @@
   background-position: 50%;
   background-image: url(../../images/Account-icon.svg);
 }
-@media screen and (min-width: 768px) and (max-width: 1279px) {
+
+@media screen and (min-width: 1281px) {
   .navigation {
-    display: flex;
+    display: none;
   }
 }
 @media screen and (min-width: 320px) and (max-width: 767px) {
-  .navigation {
-    display: flex;
-    position: fixed;
-    width: 320px;
-    height: 780px;
-  }
   .navigation__links {
     width: 330px;
     padding: 144px 0 44px;

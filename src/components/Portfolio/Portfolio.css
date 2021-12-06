@@ -7,7 +7,7 @@
   grid-template-columns: repeat(2, 1fr);
 }
 .portfolio__title {
-  font-family: Inter;
+  font-family: Inter, Arial, Helvetica, sans-serif;
   font-style: normal;
   font-weight: normal;
   font-size: 18px;
@@ -17,7 +17,7 @@
   margin: 0 0 50px;
 }
 .portfolio__site {
-  font-family: Inter;
+  font-family: Inter, Arial, Helvetica, sans-serif;
   font-style: normal;
   font-weight: normal;
   font-size: 30px;
@@ -33,7 +33,7 @@
   padding-bottom: 19px;
   margin: 0 0 20px;
   justify-content: end;
-  font-family: Inter;
+  font-family: Inter, Arial, Helvetica, sans-serif;
   font-style: normal;
   font-weight: normal;
   font-size: 30px;

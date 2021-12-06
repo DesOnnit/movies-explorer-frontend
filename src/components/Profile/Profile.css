@@ -1,16 +1,16 @@
 .profile {
-  padding: 0 70px 70px 70px;
+  padding: 74px 70px 70px 70px;
   background-color: #202020;
 }
 .profile__title {
-  font-family: Inter;
+  font-family: Inter, Arial, Helvetica, sans-serif;
   font-style: normal;
   font-weight: 500;
   font-size: 24px;
   line-height: 29px;
   text-align: center;
   color: #ffffff;
-  margin: 74px auto 123px;
+  margin: 0 auto 123px;
 }
 .profile__info {
   display: flex;
@@ -19,7 +19,7 @@
   margin: 0 auto;
 }
 .profile__info_data {
-  font-family: Inter;
+  font-family: Inter, Arial, Helvetica, sans-serif;
   font-style: normal;
   font-weight: 500;
   font-size: 11px;
@@ -35,7 +35,7 @@
   width: 410px;
 }
 .profile__edit {
-  font-family: Inter;
+  font-family: Inter, Arial, Helvetica, sans-serif;
   font-style: normal;
   font-weight: normal;
   font-size: 13px;
@@ -53,7 +53,7 @@
   transition: linear 0.3s;
 }
 .profile__exit {
-  font-family: Inter;
+  font-family: Inter, Arial, Helvetica, sans-serif;
   font-style: normal;
   font-weight: 500;
   font-size: 13px;
@@ -72,10 +72,10 @@
 }
 @media screen and (min-width: 768px) and (max-width: 1279px) {
   .profile {
-    padding: 0 30px 269px 30px;
+    padding: 236px 30px 269px 30px;
   }
   .profile__title {
-    margin: 236px 0 96px;
+    margin: 0 0 96px;
   }
   .profile__edit {
     margin-top: 210px;
@@ -83,10 +83,10 @@
 }
 @media screen and (min-width: 320px) and (max-width: 767px) {
   .profile {
-    padding: 0 14px 40px 14px;
+    padding: 70px 14px 40px 14px;
   }
   .profile__title {
-    margin: 70px 0 80px;
+    margin: 0 0 80px;
   }
   .profile__info {
     width: 260px;

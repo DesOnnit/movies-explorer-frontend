@@ -2,7 +2,7 @@
   background-color: #272727;
 }
 .techs__title {
-  font-family: Inter;
+  font-family: Inter, Arial, Helvetica, sans-serif;
   font-style: normal;
   font-weight: normal;
   font-size: 22px;
@@ -15,7 +15,7 @@
   border-bottom: solid 1px #dadada;
 }
 .techs__info_title {
-  font-family: Inter;
+  font-family: Inter, Arial, Helvetica, sans-serif;
   font-style: normal;
   font-weight: normal;
   font-size: 50px;
@@ -26,7 +26,7 @@
   margin: 90px auto 26px;
 }
 .techs__info_subtitle {
-  font-family: Inter;
+  font-family: Inter, Arial, Helvetica, sans-serif;
   font-style: normal;
   font-weight: normal;
   font-size: 14px;
@@ -45,7 +45,7 @@
   padding-bottom: 100px;
 }
 .techs__skills_text {
-  font-family: Inter;
+  font-family: Inter, Arial, Helvetica, sans-serif;
   font-style: normal;
   font-weight: normal;
   font-size: 14px;

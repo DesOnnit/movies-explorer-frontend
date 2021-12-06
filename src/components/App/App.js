@@ -1,3 +1,4 @@
+import React from 'react';
 import Main from '../Main/Main'
 import { Switch, Route } from 'react-router-dom';
 import Movies from '../Movies/Movies';
@@ -9,29 +10,55 @@ import Register from '../Register/Register';
 import PageNotFound from '../PageNotFound/PageNotFound';
 import './App.css';
 import Navigation from '../Navigation/Navigation';
-
+import Header from '../Header/Header';
 
 function App() {
+
+  const [navigation, setNavigation] = React.useState(false);
+
+  function openNavigation(){
+    setNavigation(true);
+  };
+
+  function closeNavigation(){
+    setNavigation(false);
+  };
+
   return (
     <div className="App">
       <Switch>
         <Route exact path="/">
-          <Navigation />
+          <Navigation
+          navigation={navigation}
+          closeNavigation={closeNavigation}
+           />
           <Main />
           <Footer />
         </Route>
         <Route path="/movies">
-          <Navigation />
+          <Navigation 
+          navigation={navigation}
+          closeNavigation={closeNavigation}/>
+          <Header
+          openNavigation={openNavigation} />
           <Movies />
           <Footer />
         </Route>
         <Route path="/saved-movies">
-          <Navigation />
+          <Navigation
+          navigation={navigation}
+          closeNavigation={closeNavigation} />
+          <Header
+          openNavigation={openNavigation}  />
           <SavedMovies />
           <Footer />
         </Route>
         <Route path="/profile">
-          <Navigation />
+          <Navigation
+          navigation={navigation}
+          closeNavigation={closeNavigation} />
+          <Header
+          openNavigation={openNavigation} />
           <Profile />
         </Route>
         <Route path="/signin">

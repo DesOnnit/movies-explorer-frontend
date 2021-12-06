@@ -2,7 +2,7 @@ import { Link, NavLink } from 'react-router-dom'
 import './Header.css';
 import Logo from '../../images/PromoHeader-logo.svg'
 import './Header.css'
-function Header() {
+function Header({openNavigation}) {
     return (
         <div className="header">
             <Link to="/" className="header__link">
@@ -20,7 +20,7 @@ function Header() {
                     <p className="header__link_account_logo"></p>
                 </NavLink>
             </div>
-            <button type="button" className="header__button" />
+            <button type="button" className="header__button" onClick={openNavigation} />
         </div>
     )
 }
