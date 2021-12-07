@@ -93,8 +93,8 @@
     margin-top: 22px;
   }
   .about-project__time {
-    grid-template-columns: 140px 528px;
-    padding-bottom: 90px;
+    grid-template-columns: minmax(140px, 1fr) minmax(528px, 4fr);
+    padding: 0 50px 90px;
   }
 }
 @media screen and (min-width: 320px) and (max-width: 767px) {
@@ -133,7 +133,7 @@
     margin-bottom: 56px;
   }
   .about-project__time {
-    grid-template-columns: 100px 184px;
-    padding-bottom: 70px;
+    grid-template-columns: minmax(100px, 1fr) minmax(184px, 4fr);
+    padding: 0 18px 70px;
   }
 }
