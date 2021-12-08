@@ -1,0 +1,19 @@
+.savedMovies {
+  background: #202020;
+  margin: 0 auto;
+  padding: 0 70px;
+}
+.savedMovies__spacer {
+  margin: 0 auto;
+  padding-bottom: 220px;
+}
+@media screen and (min-width: 768px) and (max-width: 1279px) {
+  .savedMovies {
+    padding: 0 30px;
+  }
+}
+@media screen and (min-width: 320px) and (max-width: 767px) {
+  .savedMovies {
+    padding: 0 14px;
+  }
+}

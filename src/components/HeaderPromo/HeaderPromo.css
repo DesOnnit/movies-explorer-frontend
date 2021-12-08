@@ -1,0 +1,51 @@
+.header-promo {
+  background-color: #073042;
+  height: 74px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.header-promo__logo {
+  margin-left: 70px;
+}
+.header-promo__nav {
+  align-items: center;
+  text-decoration: none;
+  font-family: Inter, Arial, Helvetica, sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 16px;
+}
+.header-promo__nav:hover {
+  opacity: 0.5;
+  transition: linear 0.3s;
+}
+.header-promo__nav_reg {
+  color: white;
+}
+.header-promo__nav_entry {
+  color: black;
+  padding: 8px 20px;
+  background: #3ddc84;
+  border-radius: 3px;
+  margin: 0 70px 0 30px;
+}
+
+@media screen and (min-width: 768px) and (max-width: 1279px) {
+  .header-promo__logo {
+    margin-left: 30px;
+  }
+  .header-promo__nav_entry {
+    margin: 0 30px;
+  }
+}
+
+@media screen and (min-width: 320px) and (max-width: 767px) {
+  .header-promo__logo {
+    margin-left: 14px;
+  }
+  .header-promo__nav_entry {
+    margin: 0 14px;
+  }
+}

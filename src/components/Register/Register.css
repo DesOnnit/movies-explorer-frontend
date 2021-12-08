@@ -1,0 +1,129 @@
+.register {
+  background-color: #202020;
+  margin: 0 auto;
+  padding: 70px 442px;
+}
+.register__logo {
+  width: 38px;
+  height: 38px;
+}
+.register__logo:hover {
+  opacity: 0.5;
+  transition: linear 0.3s;
+}
+.register__title {
+  font-family: Inter, Arial, Helvetica, sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 24px;
+  line-height: 29px;
+  color: #ffffff;
+  margin: 40px 0;
+}
+.register__form {
+  display: flex;
+  flex-direction: column;
+}
+.register__label {
+  display: flex;
+  flex-direction: column;
+  font-family: Inter, Arial, Helvetica, sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 10px;
+  line-height: 12px;
+  color: #8b8b8b;
+  margin-bottom: 20px;
+}
+.register__label:nth-child(3) {
+  margin-bottom: 0;
+}
+.register__input {
+  background: #2f2f2f;
+  border-radius: 8px;
+  font-family: Inter, Arial, Helvetica, sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 16px;
+  color: #ffffff;
+  border: 0;
+  height: 46px;
+  margin-top: 10px;
+  outline-color: none;
+}
+.register__btn {
+  background: #4285f4;
+  border-radius: 3px;
+  font-family: Inter, Arial, Helvetica, sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 17px;
+  text-align: center;
+  color: #ffffff;
+  border: 0;
+  margin: 69px 0 16px;
+  height: 45px;
+  cursor: pointer;
+}
+.register__btn:hover {
+  opacity: 0.8;
+  transition: linear 0.3s;
+}
+.register__redirect {
+  font-family: Inter, Arial, Helvetica, sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 17px;
+  text-align: center;
+  color: #8b8b8b;
+  margin: 0;
+}
+.register__link {
+  color: #4285f4;
+  margin-left: 6px;
+  text-decoration: none;
+}
+.register__link:hover {
+  opacity: 0.8;
+  transition: linear 0.3s;
+}
+.register__error {
+  font-family: Inter, Arial, Helvetica, sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 10px;
+  line-height: 12px;
+  color: #ee3465;
+  margin-top: 10px;
+}
+@media screen and (min-width: 768px) and (max-width: 1279px) {
+  .register {
+    padding: 232px 186px;
+  }
+}
+@media screen and (min-width: 320px) and (max-width: 767px) {
+  .register {
+    padding: 56px 30px 30px 30px;
+  }
+  .register__logo {
+    display: flex;
+    margin: 0 auto;
+  }
+  .register__title {
+    margin: 50px auto 80px;
+    width: 240px;
+  }
+  .register__btn {
+    margin: 157px 0 14px;
+  }
+  .register__redirect {
+    font-size: 12px;
+    line-height: 15px;
+  }
+  .register__link {
+    margin-left: 7px;
+  }
+}

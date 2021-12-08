@@ -1,0 +1,117 @@
+.techs {
+  background-color: #272727;
+}
+.techs__title {
+  font-family: Inter, Arial, Helvetica, sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 22px;
+  line-height: 27px;
+  letter-spacing: -0.04em;
+  color: #ffffff;
+  padding: 100px 0 23px;
+  margin: 0 auto;
+  max-width: 1140px;
+  border-bottom: solid 1px #dadada;
+}
+.techs__info_title {
+  font-family: Inter, Arial, Helvetica, sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 50px;
+  line-height: 58px;
+  text-align: center;
+  letter-spacing: -0.04em;
+  color: #ffffff;
+  margin: 90px auto 26px;
+}
+.techs__info_subtitle {
+  font-family: Inter, Arial, Helvetica, sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 20px;
+  text-align: center;
+  letter-spacing: -0.04em;
+  color: #ffffff;
+  margin: 0 auto 100px;
+  max-width: 460px;
+}
+.techs__skills {
+  display: grid;
+  grid-template-columns: repeat(7, 90px);
+  justify-content: center;
+  column-gap: 10px;
+  padding-bottom: 100px;
+}
+.techs__skills_text {
+  font-family: Inter, Arial, Helvetica, sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 17px;
+  text-align: center;
+  letter-spacing: -0.04em;
+  color: #ffffff;
+  margin: 0 auto;
+  padding: 21px 0 22px;
+  background: #303030;
+  border-radius: 10px;
+  width: 90px;
+}
+
+@media screen and (min-width: 768px) and (max-width: 1267px) {
+  .techs__title {
+    padding: 90px 0 23px;
+    margin: 0 50px;
+  }
+  .techs__info_title {
+    margin: 80px auto 22px;
+  }
+  .techs__info_subtitle {
+    font-size: 12px;
+    line-height: 18px;
+    margin: 0 auto 83px;
+  }
+  .techs__skills {
+    grid-template-columns: repeat(7, 84px);
+    padding-bottom: 90px;
+  }
+  .techs__skills_text {
+    font-size: 12px;
+    line-height: 15px;
+    padding: 21px 0;
+    width: 84px;
+  }
+}
+@media screen and (min-width: 320px) and (max-width: 767px) {
+  .techs__title {
+    padding: 70px 0 28px;
+    font-size: 18px;
+    line-height: 22px;
+    margin: 0 18px;
+    border-color: black;
+  }
+  .techs__info_title {
+    font-size: 30px;
+    line-height: 36px;
+    margin: 60px 0 24px;
+  }
+  .techs__info_subtitle {
+    font-size: 11px;
+    line-height: 16px;
+    margin-bottom: 50px;
+    max-width: 292px;
+  }
+  .techs__skills {
+    grid-template-columns: repeat(2, 84px);
+    row-gap: 10px;
+    column-gap: 10px;
+    padding-bottom: 70px;
+    margin: 0 auto;
+    padding: 0 auto;
+  }
+  .techs__skills_text {
+    width: 84px;
+  }
+}
