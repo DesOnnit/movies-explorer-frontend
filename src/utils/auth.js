@@ -1,4 +1,4 @@
-export const BASE_URL = 'https://api.onnit.student.nomoredomains.rocks';
+export const BASE_URL = 'https://diplom.movies.nomoredomains.rocks';
 export const checkResponse = res => res.ok ? res.json() : Promise.reject(res.status);
 export const register = (name, email, password) => {
     return fetch(`${BASE_URL}/signup`, {
