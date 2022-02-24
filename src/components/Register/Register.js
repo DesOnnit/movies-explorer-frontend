@@ -10,7 +10,7 @@ function Register({ handleRegister, errMessage }) {
     const [nameError, setNameError] = useState('');
     const [passwordError, setPasswordError] = useState('');
     const [isValid, setIsValid] = useState(false);
-
+    const [isDisabled, setIsDisabled] = useState(false);
     useEffect(() => {
         (!emailError && !nameError && !passwordError) && (name !== '' && email !== '' && password !== '') ? setIsValid(true) : setIsValid(false);
     }, [email, emailError, name, nameError, password, passwordError])
@@ -34,6 +34,8 @@ function Register({ handleRegister, errMessage }) {
     function handleSubmit(e) {
         e.preventDefault();
         handleRegister(name, email, password);
+        setIsDisabled(true);
+        setTimeout(() => setIsDisabled(false), 2000)
     }
 
     return (
@@ -45,21 +47,21 @@ function Register({ handleRegister, errMessage }) {
             <form name="register" className="register__form" onSubmit={handleSubmit} >
                 <label for="name" className="register__label">
                     Имя
-                    <input type="text" value={name} name="name" className="register__input" required onChange={handleName} />
+                    <input type="text" value={name} disabled={isDisabled} name="name" className="register__input" required onChange={handleName} />
                 </label>
                 <span className="register__error">{nameError}</span>
                 <label for="email" className="register__label">
                     E-mail
-                    <input type="email" value={email} name="email" className="register__input" required onChange={handleEmail} />
+                    <input type="email" value={email} disabled={isDisabled} name="email" className="register__input" required onChange={handleEmail} />
                 </label>
                 <span className="register__error">{emailError}</span>
                 <label for="password" className="register__label">
                     Пароль
-                    <input type="password" value={password} name="password" className="register__input" required onChange={handlePassword} />
+                    <input type="password" value={password} disabled={isDisabled} name="password" className="register__input" required onChange={handlePassword} />
                 </label>
                 <span className="register__error">{passwordError}</span>
                 <span className="register__error_btn">{errMessage}</span>
-                <button type="submit" disabled={!isValid} className={isValid ? "register__btn" : "register__btn register__btn_hiden"}>Зарегистрироваться</button>
+                <button type="submit" disabled={!isValid || isDisabled} className={isValid ? "register__btn" : "register__btn register__btn_hiden"}>Зарегистрироваться</button>
             </form>
             <p className="register__redirect">Уже зарегистрированы?
                 <Link to="/signin" className="register__redirect register__link">Войти</Link>

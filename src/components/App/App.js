@@ -18,7 +18,9 @@ import "./App.css";
 function App() {
   const history = useHistory();
   const [navigation, setNavigation] = useState(false);
-  const [isLogin, setIsLogin] = useState(JSON.parse(localStorage.getItem("loggedIn")) || false);
+  const [isLogin, setIsLogin] = useState(
+    JSON.parse(localStorage.getItem("loggedIn")) || false
+  );
   const [errMessage, setErrorMessage] = useState("");
   const [currentUser, setCurrentUser] = useState("");
   const [cards, setCards] = useState([]);
@@ -34,7 +36,9 @@ function App() {
   const [isSuccessReq, setIsSuccessReq] = useState(false);
   const [isBadReq, setIsBadReq] = useState(false);
   const [messageReq, setMessageReq] = useState("");
-
+  const [allMovies, setAllMovies] = useState(
+    JSON.parse(localStorage.getItem("movies")) || []
+  );
   //следим за изменением разрешения экрана+отрисовкой кнопки "Еще"
   useEffect(() => {
     window.addEventListener(`resize`, () => {
@@ -95,8 +99,7 @@ function App() {
       .authorize(email, password)
       .then((res) => {
         if (res) {
-          auth.getContent(res)
-          .then(() => {
+          auth.getContent(res).then(() => {
             setIsLogin(true);
             history.push("/movies");
           });
@@ -106,8 +109,8 @@ function App() {
         setErrorMessage(err);
       })
       .finally(() => {
-        setTimeout(() =>setErrorMessage(''),2000)
-      })
+        setTimeout(() => setErrorMessage(""), 2000);
+      });
   }
   //проверка токена пользователя
   useEffect(() => {
@@ -148,7 +151,7 @@ function App() {
         .catch((err) => console.log(err));
       handleSearch();
       getStartMovies();
-      getLikedMovies();
+      localStorage.getItem("foundLikedMovies") === null? getLikedMovies() : getFoundLikedMovies()
     }
   }, [isLogin]);
 
@@ -157,7 +160,9 @@ function App() {
     movies
       .searchMovies()
       .then((res) => {
-        localStorage.setItem("movies", JSON.stringify([...res]));
+        JSON.parse(localStorage.getItem("movies")) === null
+          ? localStorage.setItem("movies", JSON.stringify([...res]))
+          : JSON.parse(localStorage.getItem("movies"));
       })
       .catch(() => {
         setErrorMessage(
@@ -185,13 +190,22 @@ function App() {
             return card;
           }
         });
+        let allSaved = allMovies.map((card) => {
+          if (res.movieId === card.id.toString()) {
+            card.isLike = true;
+            return card;
+          } else {
+            return card;
+          }
+        });
+        localStorage.setItem("movies", JSON.stringify(allSaved));
         localStorage.setItem("foundCard", JSON.stringify(saved));
-        localStorage.setItem("movies", JSON.stringify(saved));
         setCards(saved);
       })
       .catch((err) => console.log(err));
   }
-  //переделать то, что связано с локальным хранилищем
+
+
   function handleDeleteLikedMovies(card) {
     api
       .deleteMovie(card._id)
@@ -204,8 +218,16 @@ function App() {
             return c;
           }
         });
+        let savedAll = allMovies.map((c) => {
+          if (card.movieId === c.id.toString()) {
+            c.isLike = false;
+            return c;
+          } else {
+            return c;
+          }
+        });
+        localStorage.setItem("movies", JSON.stringify(savedAll));
         localStorage.setItem("foundCard", JSON.stringify(saved));
-        localStorage.setItem("movies", JSON.stringify(saved));
         setCards(saved);
         let liked = likedMovie.filter((c) => c._id !== card._id);
         localStorage.setItem("likedMovies", JSON.stringify(liked));
@@ -231,6 +253,15 @@ function App() {
       });
       localStorage.setItem("foundCard", JSON.stringify(saved));
       setCards(saved);
+      let savedAll = allMovies.map((c) => {
+        if (card.id === c.id) {
+          c.isLike = false;
+          return c;
+        } else {
+          return c;
+        }
+      });
+      localStorage.setItem("movies", JSON.stringify(savedAll));
     });
   }
 
@@ -247,7 +278,7 @@ function App() {
       })
       .catch((err) => {
         setIsBadReq(true);
-        setMessageReq(err.message);
+        setMessageReq(err);
       })
       .finally(() => {
         setTimeout(() => setIsSuccessReq(false), 5000);
@@ -266,11 +297,18 @@ function App() {
     setMoviesState(true);
     return setLikedMovie(card !== null ? JSON.parse(card) : []);
   }
+ 
+  function getFoundLikedMovies() {
+    const card = localStorage.getItem("foundLikedMovies");
+    setMoviesState(true);
+    return setLikedMovie(card !== null ? JSON.parse(card) : []);
+  }
 
   //функция получения данных из локального хранилища, отрисовка в стейт карточек результата
   function getLocalStorage() {
-    const card = localStorage.getItem("movies");
-    return card !== null ? JSON.parse(card) : [];
+    const card = JSON.parse(localStorage.getItem("movies"));
+    setAllMovies(card);
+    return card;
   }
 
   function getLocalStorageLikedMovies() {
@@ -318,12 +356,14 @@ function App() {
     );
     const searchFilterMovies = searcCard.filter((c) => c.duration < 40);
     if (statusFilter === false) {
-      localStorage.setItem("likedMovies", JSON.stringify(searcCard));
+      localStorage.setItem("foundLikedMovies", JSON.stringify(searcCard));
       setLikedMovie(searcCard);
+
     } else {
       setLikedMovie(searchFilterMovies);
-      localStorage.setItem("likedMovies", JSON.stringify(searchFilterMovies));
+      localStorage.setItem("foundLikedMovies", JSON.stringify(searchFilterMovies));
     }
+
     setMoviesMessageState(false);
     if (searcCard.length < 1) {
       //Скрыть список фильмов + показать сообщение,что ничего не найдено
@@ -335,7 +375,7 @@ function App() {
     }
   }
   //Изменение кнопки Короткометражки + отрисовка их
-  //нужно добавить результаты в локальное хранилище
+
   function handleFilterMovies() {
     statusFilter === false ? setStatusFilter(true) : setStatusFilter(false);
     const reg = new RegExp(`${filterText}`, "i");
@@ -358,10 +398,10 @@ function App() {
     );
     const searchFilterMovies = searcCard.filter((c) => c.duration < 40);
     if (statusFilter === false) {
-      localStorage.setItem("likedMovies", JSON.stringify(searchFilterMovies));
+      localStorage.setItem("foundLikedMovies", JSON.stringify(searchFilterMovies));
       setLikedMovie(searchFilterMovies);
     } else {
-      localStorage.setItem("likedMovies", JSON.stringify(searcCard));
+      localStorage.setItem("foundLikedMovies", JSON.stringify(searcCard));
       setLikedMovie(searcCard);
     }
   }
