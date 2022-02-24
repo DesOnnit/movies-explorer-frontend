@@ -18,7 +18,7 @@ import "./App.css";
 function App() {
   const history = useHistory();
   const [navigation, setNavigation] = useState(false);
-  const [isLogin, setIsLogin] = useState(false);
+  const [isLogin, setIsLogin] = useState(JSON.parse(localStorage.getItem("loggedIn")) || false);
   const [errMessage, setErrorMessage] = useState("");
   const [currentUser, setCurrentUser] = useState("");
   const [cards, setCards] = useState([]);
@@ -95,7 +95,8 @@ function App() {
       .authorize(email, password)
       .then((res) => {
         if (res) {
-          auth.getContent(res).then(() => {
+          auth.getContent(res)
+          .then(() => {
             setIsLogin(true);
             history.push("/movies");
           });
@@ -103,7 +104,10 @@ function App() {
       })
       .catch((err) => {
         setErrorMessage(err);
-      });
+      })
+      .finally(() => {
+        setTimeout(() =>setErrorMessage(''),2000)
+      })
   }
   //проверка токена пользователя
   useEffect(() => {
@@ -130,7 +134,6 @@ function App() {
   function handleSignOut() {
     localStorage.clear();
     setIsLogin(false);
-    history.push("/");
   }
 
   //если залогинены, получаем данные пользователя + карточки фильмов
@@ -140,6 +143,7 @@ function App() {
         .getUser()
         .then((res) => {
           setCurrentUser(res.data);
+          localStorage.setItem("loggedIn", JSON.stringify(true));
         })
         .catch((err) => console.log(err));
       handleSearch();
@@ -182,6 +186,7 @@ function App() {
           }
         });
         localStorage.setItem("foundCard", JSON.stringify(saved));
+        localStorage.setItem("movies", JSON.stringify(saved));
         setCards(saved);
       })
       .catch((err) => console.log(err));
@@ -200,6 +205,7 @@ function App() {
           }
         });
         localStorage.setItem("foundCard", JSON.stringify(saved));
+        localStorage.setItem("movies", JSON.stringify(saved));
         setCards(saved);
         let liked = likedMovie.filter((c) => c._id !== card._id);
         localStorage.setItem("likedMovies", JSON.stringify(liked));
