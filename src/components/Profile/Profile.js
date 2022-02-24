@@ -33,7 +33,7 @@ function Profile(props) {
         props.handleUpdateUser({ name: name, email: email });
         setError('Отправка...')
         setTimeout(function () {
-            setError('')
+            setError('');
         }, 2000)
     }
 
@@ -62,6 +62,7 @@ function Profile(props) {
                     </p>
                     <input className="profile__info_input" value={email} type="email" name="email" onChange={handleEmail} />
                 </div>
+                {props.isSuccessReq || props.isBadReq ? <span className="profile__message">{props.message}</span> : ''}
                 <span className="profile__error">{error}</span>
                 <button type="submit" className={isValid ? "profile__edit" : "profile__edit_hide"} disabled={!isValid} onClick={handleSubmit}>Редактировать</button>
                 <button type="button" className="profile__exit" onClick={props.handleSignOut}>Выйти из аккаунта</button>

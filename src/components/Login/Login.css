@@ -66,11 +66,11 @@
   opacity: 0.8;
   transition: linear 0.3s;
 }
-.login__btn_hiden{
-  cursor:none;
-  background:#CCCCCC;
+.login__btn_hiden {
+  cursor: none;
+  background: #cccccc;
 }
-.login__error_btn{
+.login__error_btn {
   font-family: Inter, Arial, Helvetica, sans-serif;
   font-style: normal;
   font-weight: normal;
@@ -99,14 +99,14 @@
   opacity: 0.5;
   transition: linear 0.3s;
 }
-.login__error{
+.login__error {
   font-family: Inter, Arial, Helvetica, sans-serif;
   font-style: normal;
   font-weight: normal;
   font-size: 10px;
   line-height: 12px;
   color: #ee3465;
-  margin:10px 0 8px;
+  margin: 10px 0 8px;
 }
 @media screen and (min-width: 768px) and (max-width: 1279px) {
   .login {

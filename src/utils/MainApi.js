@@ -8,7 +8,6 @@ export const getUser = () => {
         credentials: 'include'
     })
         .then(checkResponse)
-        .catch((err) => console.log(err))
 }
 export const updateUser = (name, email) => {
     return fetch(`${BASE_URL}/users/me`, {
@@ -23,7 +22,6 @@ export const updateUser = (name, email) => {
         credentials: 'include'
     })
         .then(checkResponse)
-        .catch((err) => console.log(err))
 }
 export const likeMovie = ({
     country, director, duration, year, description, image, trailer, nameRU, nameEN, thumbnail, movieId }) => {
@@ -48,7 +46,6 @@ export const likeMovie = ({
         })
     })
         .then(checkResponse)
-        .catch((err) => console.log(err))
 }
 
 export const deleteMovie = (id) => {
@@ -60,5 +57,4 @@ export const deleteMovie = (id) => {
         },
     })
         .then(checkResponse)
-        .catch((err) => console.log(err))
 }

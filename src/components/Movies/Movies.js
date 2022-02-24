@@ -29,7 +29,7 @@ function Movies(props) {
                 movie={props.cards}
                 numberOfCards={props.numberOfCards} />
             <h1 className="movies__error">{props.errMessage}</h1>
-            <button type="button" className={props.statusButton ? "movies__button" : "movies__button_hide"} onClick={props.handleClickShowMore}>Ещё</button>
+            <button type="button" className={props.statusButton ? "movies__button" : "movies__button_hide"} onClick={props.handleClickNextMovie}>Ещё</button>
             <Footer />
         </div>
     )

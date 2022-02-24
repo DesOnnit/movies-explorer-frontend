@@ -72,6 +72,19 @@
   position: relative;
   top: 200px;
 }
+.profile__message {
+  font-family: Inter, Arial, Helvetica, sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 24px;
+  line-height: 29px;
+  text-align: center;
+  color: #ffffff;
+  display: flex;
+  justify-content: center;
+  position: relative;
+  top: 50px;
+}
 .profile__edit_hide {
   background: none;
   border: 0;
@@ -109,7 +122,7 @@
   .profile__edit {
     margin-top: 210px;
   }
-  .profile__edit_hide{
+  .profile__edit_hide {
     margin-top: 210px;
   }
 }
@@ -131,14 +144,14 @@
     font-size: 12px;
     line-height: 15px;
   }
-  .profile__edit_hide{
+  .profile__edit_hide {
     margin-top: 379px;
   }
   .profile__exit {
     font-size: 12px;
     line-height: 15px;
   }
-  .profile__error{
+  .profile__error {
     top: 360px;
   }
 }

@@ -8,6 +8,7 @@ function Login({handleLogin,errMessage}) {
     const [emailError, setEmailError] = useState('');
     const [passwordError, setPasswordError] = useState('');
     const [isValid, setIsValid] = useState(false);
+    const [isDisabled, setIsDisabled] = useState(false);
     
     useEffect(() => {
         (!emailError && !passwordError) && (  email !== '' && password !== '') ? setIsValid(true) : setIsValid(false);
@@ -28,6 +29,8 @@ function Login({handleLogin,errMessage}) {
     function handleSubmit(e) {
         e.preventDefault();
         handleLogin(email, password);
+        setIsDisabled(true);
+        setTimeout(()=> setIsDisabled(false),2000)
     }
     return (
         <div className="login">
@@ -38,12 +41,12 @@ function Login({handleLogin,errMessage}) {
             <form name="login" className="login__form" onSubmit={handleSubmit}>
                 <label for="email" className="login__label">
                     E-mail
-                    <input type="email" name="email" className="login__input" required value={email} onChange={handleEmail} />
+                    <input type="email"disabled={isDisabled} name="email" className="login__input" required value={email} onChange={handleEmail} />
                 </label>
                 <span className="login__error">{emailError}</span>
                 <label for="password" className="login__label">
                     Пароль
-                    <input type="password" name="password" className="login__input" required value={password} onChange={handlePassword} />
+                    <input type="password"disabled={isDisabled} name="password" className="login__input" required value={password} onChange={handlePassword} />
                 </label>
                 <span className="login__error">{passwordError}</span>
                 <span className="login__error_btn">{errMessage}</span>

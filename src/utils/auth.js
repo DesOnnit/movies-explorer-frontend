@@ -11,7 +11,6 @@ export const register = (name, email, password) => {
         body: JSON.stringify({ name, email, password })
     })
         .then(checkResponse)
-        .catch((err) => console.log(err))
 }
 export const authorize = (email, password) => {
     return fetch(`${BASE_URL}/signin`, {
@@ -31,7 +30,6 @@ export const authorize = (email, password) => {
             }
             return
         })
-        .catch((err) => console.log(err))
 }
 export const getContent = (token) => {
     return fetch(`${BASE_URL}/users/me`, {

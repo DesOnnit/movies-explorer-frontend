@@ -8,5 +8,4 @@ export const searchMovies = () => {
         },
     })
         .then(checkResponse)
-        .catch((err) => console.log(err))
 } 
