@@ -1,6 +1,6 @@
 import { React, useState, useEffect } from "react";
 import Main from "../Main/Main";
-import { Switch, Route, useHistory } from "react-router-dom";
+import { Switch, Route, useHistory, Redirect } from "react-router-dom";
 import Movies from "../Movies/Movies.js";
 import Footer from "../Footer/Footer";
 import SavedMovies from "../SavedMovies/SavedMovies";
@@ -14,6 +14,12 @@ import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 import { CurrentUserContext } from "../../context/CurrentUserContext";
 import * as api from "../../utils/MainApi";
 import * as movies from "../../utils/MoviesApi";
+import {
+  SERVER_ERR,
+  CONFLICT_ERR,
+  BAD_REQUEST_ERR,
+  AUTH_ERR,
+} from "../../utils/constants";
 import "./App.css";
 function App() {
   const history = useHistory();
@@ -24,11 +30,9 @@ function App() {
   const [errMessage, setErrorMessage] = useState("");
   const [currentUser, setCurrentUser] = useState("");
   const [cards, setCards] = useState([]);
-  const [numberOfCards, setNumberOfCards] = useState(12);
-  const [nextMovie, setNextMovie] = useState(3);
-  const [statusButton, setStatusButton] = useState(false);
   const [statusPreloader, setStatusPreloader] = useState(false);
   const [statusFilter, setStatusFilter] = useState(false);
+  const [statusFilterLiked, setStatusFilterLiked] = useState(false);
   const [filterText, setFilterText] = useState("");
   const [moviesState, setMoviesState] = useState(false);
   const [moviesMessageStatus, setMoviesMessageState] = useState(false);
@@ -39,37 +43,6 @@ function App() {
   const [allMovies, setAllMovies] = useState(
     JSON.parse(localStorage.getItem("movies")) || []
   );
-  //следим за изменением разрешения экрана+отрисовкой кнопки "Еще"
-  useEffect(() => {
-    window.addEventListener(`resize`, () => {
-      adaptive();
-    });
-    cards.length > numberOfCards
-      ? setStatusButton(true)
-      : setStatusButton(false);
-  }, [numberOfCards, cards]);
-
-  //функция изменения отрисовки карточек и добавления дополнительных в зависимости от разрешения экрана
-  function adaptive() {
-    let size = window.innerWidth;
-    if (size >= 1280) {
-      setNumberOfCards(12);
-      setNextMovie(3);
-    } else if (size >= 768 && size < 1279) {
-      setNumberOfCards(8);
-      setNextMovie(2);
-    } else if (size >= 320 && size < 767) {
-      setNumberOfCards(5);
-      setNextMovie(2);
-    }
-  }
-
-  //функция изменения количества отрисовки карточек при нажатии "Еще"
-  function handleClickNextMovie(e) {
-    e.preventDefault();
-    let more = numberOfCards + nextMovie;
-    setNumberOfCards(more);
-  }
 
   //функции открытия/закрытия окна навигации
   function openNavigation() {
@@ -106,7 +79,13 @@ function App() {
         }
       })
       .catch((err) => {
-        setErrorMessage(err);
+        if (err === 401) {
+          setErrorMessage(AUTH_ERR);
+        } else if (err === 400) {
+          setErrorMessage(BAD_REQUEST_ERR);
+        } else if (err === 409) {
+          setErrorMessage(CONFLICT_ERR);
+        }
       })
       .finally(() => {
         setTimeout(() => setErrorMessage(""), 2000);
@@ -151,7 +130,19 @@ function App() {
         .catch((err) => console.log(err));
       handleSearch();
       getStartMovies();
-      localStorage.getItem("foundLikedMovies") === null? getLikedMovies() : getFoundLikedMovies()
+      localStorage.getItem("foundLikedMovies") === null
+        ? getLikedMovies()
+        : getFoundLikedMovies();
+      setStatusFilter(
+        localStorage.getItem("statusFilter") === null
+          ? false
+          : localStorage.getItem("statusFilter")
+      );
+      setStatusFilterLiked(
+        localStorage.getItem("statusFilterLiked") === null
+          ? false
+          : localStorage.getItem("statusFilterLiked")
+      );
     }
   }, [isLogin]);
 
@@ -165,9 +156,7 @@ function App() {
           : JSON.parse(localStorage.getItem("movies"));
       })
       .catch(() => {
-        setErrorMessage(
-          "Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз"
-        );
+        setErrorMessage(SERVER_ERR);
       });
   }
 
@@ -205,7 +194,6 @@ function App() {
       .catch((err) => console.log(err));
   }
 
-
   function handleDeleteLikedMovies(card) {
     api
       .deleteMovie(card._id)
@@ -230,7 +218,7 @@ function App() {
         localStorage.setItem("foundCard", JSON.stringify(saved));
         setCards(saved);
         let liked = likedMovie.filter((c) => c._id !== card._id);
-        localStorage.setItem("likedMovies", JSON.stringify(liked));
+        localStorage.setItem("likedMovies", JSON.stringify(liked)); //
         setLikedMovie(liked);
       })
       .catch((err) => console.log(err));
@@ -297,7 +285,7 @@ function App() {
     setMoviesState(true);
     return setLikedMovie(card !== null ? JSON.parse(card) : []);
   }
- 
+
   function getFoundLikedMovies() {
     const card = localStorage.getItem("foundLikedMovies");
     setMoviesState(true);
@@ -320,6 +308,7 @@ function App() {
   //Необходимо создать переменные для локального хранилища (фильмы поиска,)
   function searchMovies() {
     //имея массив card необходимо профильтровать его filterText
+    console.log(statusFilter);
     const reg = new RegExp(`${filterText}`, "i");
     const searcCard = getLocalStorage().filter((c) =>
       reg.test(c.nameRU || c.nameEN)
@@ -358,10 +347,12 @@ function App() {
     if (statusFilter === false) {
       localStorage.setItem("foundLikedMovies", JSON.stringify(searcCard));
       setLikedMovie(searcCard);
-
     } else {
       setLikedMovie(searchFilterMovies);
-      localStorage.setItem("foundLikedMovies", JSON.stringify(searchFilterMovies));
+      localStorage.setItem(
+        "foundLikedMovies",
+        JSON.stringify(searchFilterMovies)
+      );
     }
 
     setMoviesMessageState(false);
@@ -377,7 +368,8 @@ function App() {
   //Изменение кнопки Короткометражки + отрисовка их
 
   function handleFilterMovies() {
-    statusFilter === false ? setStatusFilter(true) : setStatusFilter(false);
+    setStatusFilter(!statusFilter);
+    localStorage.setItem("statusFilter", JSON.stringify(!statusFilter));
     const reg = new RegExp(`${filterText}`, "i");
     const searcCard = getLocalStorage().filter((c) => reg.test(c.nameRU));
     const searchFilterMovies = searcCard.filter((c) => c.duration < 40);
@@ -391,14 +383,21 @@ function App() {
   }
 
   function handleFilterLikedMovies() {
-    statusFilter === false ? setStatusFilter(true) : setStatusFilter(false);
+    setStatusFilterLiked(!statusFilterLiked);
+    localStorage.setItem(
+      "statusFilterLiked",
+      JSON.stringify(!statusFilterLiked)
+    );
     const reg = new RegExp(`${filterText}`, "i");
     const searcCard = getLocalStorageLikedMovies().filter((c) =>
       reg.test(c.nameRU)
     );
     const searchFilterMovies = searcCard.filter((c) => c.duration < 40);
-    if (statusFilter === false) {
-      localStorage.setItem("foundLikedMovies", JSON.stringify(searchFilterMovies));
+    if (statusFilterLiked === false) {
+      localStorage.setItem(
+        "foundLikedMovies",
+        JSON.stringify(searchFilterMovies)
+      );
       setLikedMovie(searchFilterMovies);
     } else {
       localStorage.setItem("foundLikedMovies", JSON.stringify(searcCard));
@@ -430,9 +429,6 @@ function App() {
             openNavigation={openNavigation}
             isLogin={isLogin}
             cards={cards}
-            numberOfCards={numberOfCards}
-            handleClickNextMovie={handleClickNextMovie}
-            statusButton={statusButton}
             setFilterText={setFilterText}
             statusPreloader={statusPreloader}
             searchMovies={searchMovies}
@@ -454,11 +450,10 @@ function App() {
             handleLikeMovie={handleLikeMovie}
             moviesMessageStatus={moviesMessageStatus}
             moviesState={moviesState}
-            numberOfCards={numberOfCards}
             likedMovie={likedMovie}
             handleDeleteMovie={handleDeleteLikedMovies}
             component={SavedMovies}
-            statusFilter={statusFilter}
+            statusFilter={statusFilterLiked}
             handleFilterMovies={handleFilterLikedMovies}
             searchMovies={searchLikedMovies}
             setFilterText={setFilterText}
@@ -478,13 +473,15 @@ function App() {
             messageReq={messageReq}
           />
           <Route path="/signin">
+            {isLogin && <Redirect to="/" />}
             <Login handleLogin={handleLogin} errMessage={errMessage} />
           </Route>
           <Route path="/signup">
+            {isLogin && <Redirect to="/" />}
             <Register handleRegister={handleRegister} errMessage={errMessage} />
           </Route>
           <Route path="*">
-            <PageNotFound />
+            <PageNotFound history={history} />
           </Route>
         </Switch>
       </div>

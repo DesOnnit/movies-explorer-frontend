@@ -38,6 +38,7 @@ function MoviesCard({ movie, handleLikeMovie,handleDeleteMovie }) {
     }
     function handleClickDelete() {
         handleDeleteMovie(movie)
+        setLike(false)
     }
 
     return (

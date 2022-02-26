@@ -23,7 +23,6 @@ function SavedMovies(props) {
                 handleLikeMovie={props.handleLikeMovie}
                 moviesMessageStatus={props.moviesMessageStatus}
                 moviesState={props.moviesState}
-                numberOfCards={props.numberOfCards}
                 movie={props.likedMovie} />
             <h1 className="movies__error">{props.errMessage}</h1>
             <div className="savedMovies__spacer" />
