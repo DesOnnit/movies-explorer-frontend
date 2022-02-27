@@ -15,10 +15,15 @@ import { CurrentUserContext } from "../../context/CurrentUserContext";
 import * as api from "../../utils/MainApi";
 import * as movies from "../../utils/MoviesApi";
 import {
+  CONFLICT_ERROR_CODE,
+  BAD_REQUEST_ERROR_CODE,
+  AUTH_ERROR_CODE,
   SERVER_ERR,
   CONFLICT_ERR,
   BAD_REQUEST_ERR,
   AUTH_ERR,
+  DURATION_SHORT_FILM,
+  MIN_LENGTH_CARD
 } from "../../utils/constants";
 import "./App.css";
 function App() {
@@ -36,7 +41,7 @@ function App() {
   const [filterText, setFilterText] = useState("");
   const [moviesState, setMoviesState] = useState(false);
   const [moviesMessageStatus, setMoviesMessageState] = useState(false);
-  const [likedMovie, setLikedMovie] = useState([]);
+  const [likedMovie, setLikedMovie] = useState( []);
   const [isSuccessReq, setIsSuccessReq] = useState(false);
   const [isBadReq, setIsBadReq] = useState(false);
   const [messageReq, setMessageReq] = useState("");
@@ -79,11 +84,11 @@ function App() {
         }
       })
       .catch((err) => {
-        if (err === 401) {
+        if (err === AUTH_ERROR_CODE) {
           setErrorMessage(AUTH_ERR);
-        } else if (err === 400) {
+        } else if (err === BAD_REQUEST_ERROR_CODE) {
           setErrorMessage(BAD_REQUEST_ERR);
-        } else if (err === 409) {
+        } else if (err === CONFLICT_ERROR_CODE) {
           setErrorMessage(CONFLICT_ERR);
         }
       })
@@ -114,7 +119,9 @@ function App() {
   //функция выхода из системы. Удаляем из локального хранилища переменнве по индификатору,разлогинируемся,переходим на стартовую страницу
   //добавить удаление всех данных из локального
   function handleSignOut() {
-    localStorage.clear();
+    localStorage.removeItem('jwt');
+    localStorage.removeItem('foundCard');
+    localStorage.removeItem('statusFilter');
     setIsLogin(false);
   }
 
@@ -130,18 +137,18 @@ function App() {
         .catch((err) => console.log(err));
       handleSearch();
       getStartMovies();
-      localStorage.getItem("foundLikedMovies") === null
+      JSON.parse(localStorage.getItem("foundLikedMovies")) === null
         ? getLikedMovies()
         : getFoundLikedMovies();
       setStatusFilter(
-        localStorage.getItem("statusFilter") === null
+        JSON.parse (localStorage.getItem("statusFilter")) === null 
           ? false
-          : localStorage.getItem("statusFilter")
+          : JSON.parse (localStorage.getItem("statusFilter"))
       );
       setStatusFilterLiked(
-        localStorage.getItem("statusFilterLiked") === null
+        JSON.parse (localStorage.getItem("statusFilterLiked")) === null
           ? false
-          : localStorage.getItem("statusFilterLiked")
+          :JSON.parse (localStorage.getItem("statusFilterLiked"))
       );
     }
   }, [isLogin]);
@@ -168,6 +175,10 @@ function App() {
         res.isLike = true;
         localStorage.setItem(
           "likedMovies",
+          JSON.stringify([...likedMovie, res])
+        );
+        localStorage.setItem(
+          "foundLikedMovies",
           JSON.stringify([...likedMovie, res])
         );
         setLikedMovie([...likedMovie, res]);
@@ -217,19 +228,28 @@ function App() {
         localStorage.setItem("movies", JSON.stringify(savedAll));
         localStorage.setItem("foundCard", JSON.stringify(saved));
         setCards(saved);
-        let liked = likedMovie.filter((c) => c._id !== card._id);
-        localStorage.setItem("likedMovies", JSON.stringify(liked)); //
-        setLikedMovie(liked);
+        let liked = getLocalStorageLikedMovies().filter((c) => c._id !== card._id);
+        if (statusFilterLiked === true) {
+          let likedFilter = JSON.parse(localStorage.getItem("foundLikedMovies")).filter((c) => c._id !== card._id && c.duration < DURATION_SHORT_FILM)
+          setLikedMovie(likedFilter);
+          localStorage.setItem('foundLikedMovies', JSON.stringify(liked))
+          localStorage.setItem("likedMovies", JSON.stringify(liked));
+        } else {
+          localStorage.setItem("likedMovies", JSON.stringify(liked));
+          localStorage.setItem('foundLikedMovies', JSON.stringify(liked))
+          setLikedMovie(liked);
+        }
       })
       .catch((err) => console.log(err));
   }
 
   //функция удаления сохраненного фильма из вкладки фильмов
   function handleDeleteMovie(card) {
-    let deleteCard = likedMovie.filter((c) => c.movieId === card.id.toString());
+    let deleteCard = getLocalStorageLikedMovies().filter((c) => c.movieId === card.id.toString());
     api.deleteMovie(deleteCard[0]._id).then(() => {
-      let liked = likedMovie.filter((c) => c.movieId !== deleteCard[0].movieId);
+      let liked = getLocalStorageLikedMovies().filter((c) => c.movieId !== deleteCard[0].movieId);
       setLikedMovie(liked);
+      localStorage.setItem("foundLikedMovies", JSON.stringify(liked));
       localStorage.setItem("likedMovies", JSON.stringify(liked));
       let saved = cards.map((c) => {
         if (card.id === c.id) {
@@ -308,15 +328,14 @@ function App() {
   //Необходимо создать переменные для локального хранилища (фильмы поиска,)
   function searchMovies() {
     //имея массив card необходимо профильтровать его filterText
-    console.log(statusFilter);
     const reg = new RegExp(`${filterText}`, "i");
-    const searcCard = getLocalStorage().filter((c) =>
+    const searchCard = getLocalStorage().filter((c) =>
       reg.test(c.nameRU || c.nameEN)
     );
-    const searchFilterMovies = searcCard.filter((c) => c.duration < 40);
+    const searchFilterMovies = searchCard.filter((c) => c.duration < DURATION_SHORT_FILM);
     if (statusFilter === false) {
-      localStorage.setItem("foundCard", JSON.stringify(searcCard));
-      setCards(searcCard);
+      localStorage.setItem("foundCard", JSON.stringify(searchCard));
+      setCards(searchCard);
     } else {
       localStorage.setItem("foundCard", JSON.stringify(searchFilterMovies));
       setCards(searchFilterMovies);
@@ -326,7 +345,7 @@ function App() {
     setMoviesMessageState(false);
     //пока идет поиск показывается прелоадер
     setTimeout(() => {
-      if (searcCard.length < 1) {
+      if (searchCard.length < MIN_LENGTH_CARD) {
         //Скрыть список фильмов + показать сообщение,что ничего не найдено
         setMoviesState(false);
         setMoviesMessageState(true);
@@ -343,7 +362,7 @@ function App() {
     const searcCard = getLocalStorageLikedMovies().filter((c) =>
       reg.test(c.nameRU)
     );
-    const searchFilterMovies = searcCard.filter((c) => c.duration < 40);
+    const searchFilterMovies = searcCard.filter((c) => c.duration < DURATION_SHORT_FILM);
     if (statusFilter === false) {
       localStorage.setItem("foundLikedMovies", JSON.stringify(searcCard));
       setLikedMovie(searcCard);
@@ -356,7 +375,7 @@ function App() {
     }
 
     setMoviesMessageState(false);
-    if (searcCard.length < 1) {
+    if (searcCard.length < MIN_LENGTH_CARD) {
       //Скрыть список фильмов + показать сообщение,что ничего не найдено
       setMoviesState(false);
       setMoviesMessageState(true);
@@ -368,11 +387,11 @@ function App() {
   //Изменение кнопки Короткометражки + отрисовка их
 
   function handleFilterMovies() {
-    setStatusFilter(!statusFilter);
+        setStatusFilter(!statusFilter);
     localStorage.setItem("statusFilter", JSON.stringify(!statusFilter));
     const reg = new RegExp(`${filterText}`, "i");
     const searcCard = getLocalStorage().filter((c) => reg.test(c.nameRU));
-    const searchFilterMovies = searcCard.filter((c) => c.duration < 40);
+    const searchFilterMovies = searcCard.filter((c) => c.duration < DURATION_SHORT_FILM);
     if (statusFilter === false) {
       localStorage.setItem("foundCard", JSON.stringify(searchFilterMovies));
       setCards(searchFilterMovies);
@@ -392,7 +411,7 @@ function App() {
     const searcCard = getLocalStorageLikedMovies().filter((c) =>
       reg.test(c.nameRU)
     );
-    const searchFilterMovies = searcCard.filter((c) => c.duration < 40);
+    const searchFilterMovies = searcCard.filter((c) => c.duration < DURATION_SHORT_FILM);
     if (statusFilterLiked === false) {
       localStorage.setItem(
         "foundLikedMovies",

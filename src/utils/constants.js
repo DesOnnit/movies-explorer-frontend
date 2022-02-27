@@ -12,3 +12,10 @@ export const SERVER_ERR =
 export const CONFLICT_ERR = "Пользователь с таким email уже зарегистрирован!";
 export const BAD_REQUEST_ERR = "Переданы некорректные данные";
 export const AUTH_ERR = "Неправильные почта или пароль";
+
+export const CONFLICT_ERROR_CODE = 409;
+export const BAD_REQUEST_ERROR_CODE = 400;
+export const AUTH_ERROR_CODE = 401;
+
+export const MIN_LENGTH_CARD = 1;
+export const DURATION_SHORT_FILM =40;

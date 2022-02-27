@@ -21,6 +21,7 @@ function Movies(props) {
   const [statusButton, setStatusButton] = useState(false);
   const [nextMovie, setNextMovie] = useState(LARGE_WINDOW_MOVIES_ADD);
   const [numberOfCards, setNumberOfCards] = useState(LARGE_WINDOW_START_MOVIES);
+  let size = window.innerWidth;
 
   useEffect(() => {
     window.addEventListener(`resize`, () => {
@@ -31,12 +32,13 @@ function Movies(props) {
       : setStatusButton(false);
 
     return () => {
-      window.removeEventListener("resize", adaptive);
+      window.removeEventListener("resize", () => {
+        adaptive();
+      });
     };
-  }, [numberOfCards, props.cards]);
+  }, [size,props.cards]);
 
   function adaptive() {
-    let size = window.innerWidth;
     if (size >= LARGE_WINDOW_SIZE) {
       setNumberOfCards(LARGE_WINDOW_START_MOVIES);
       setNextMovie(LARGE_WINDOW_MOVIES_ADD);
