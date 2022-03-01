@@ -48,6 +48,16 @@ export const likeMovie = ({
         .then(checkResponse)
 }
 
+export const getSavedMovies = () => {
+    return fetch(`${BASE_URL}/movies`, {
+        method: "GET",
+        credentials: "include",
+        headers: {
+            "Content-Type": "application/json"
+        },
+    })
+    .then(checkResponse)
+};
 export const deleteMovie = (id) => {
     return fetch(`${BASE_URL}/movies/${id}`, {
         method: 'DELETE',
