@@ -4,6 +4,18 @@
   grid-template-rows: repeat(auto, 1fr);
   gap: 32px;
   margin: 70px auto 10px;
+  padding:0 70px;
+}
+.moviesCardList_hide{
+  display: none;
+}
+.moviesCardList__message{
+  display: flex;
+  justify-content: center;
+  color: #fff;
+}
+.moviesCardList__message_hide{
+  display: none;
 }
 @media screen and (min-width: 768px) and (max-width: 1279px) {
   .moviesCardList {
@@ -11,6 +23,7 @@
     gap: 35px 24px;
     margin-bottom: 30px;
     justify-content: center;
+    padding:0 30px;
   }
 }
 @media screen and (min-width: 320px) and (max-width: 767px) {
@@ -19,5 +32,6 @@
     margin: 40px auto 30px;
     justify-content: center;
     row-gap: 16px;
+    padding:0 14px;
   }
 }

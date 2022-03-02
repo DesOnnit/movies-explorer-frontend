@@ -1,9 +1,9 @@
 import { Link, NavLink } from 'react-router-dom'
 import './Navigation.css';
-function Navigation({navigation,closeNavigation}) {
+function Navigation(props) {
     return (
-        <div className={!navigation ? "navigation_hiden":"navigation"}>
-            <button type="button" className="navigation__close-button" onClick={closeNavigation} />
+        <div className={!props.navigation ? "navigation_hiden":"navigation"}>
+            <button type="button" className="navigation__close-button" onClick={props.closeNavigation} />
             <div className="navigation__links">
                 <NavLink activeClassName="navigation__link_active" className="navigation__link" exact to="/">
                     Главная

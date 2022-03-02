@@ -1,14 +1,14 @@
 .movies {
   margin: 0 auto;
   background-color: #202020;
-  padding: 0 70px 80px;
+  padding: 0;
   max-width: 1280px;
 }
 .movies__button {
   display: block;
   width: 320px;
   height: 36px;
-  margin: 50px auto 0;
+  margin: 50px auto 80px;
   padding: 0;
   background: #2f2f2f;
   border-radius: 6px;
@@ -26,15 +26,18 @@
   transition: linear 0.3s;
 }
 
-@media screen and (min-width: 768px) and (max-width: 1279px) {
-  .movies {
-    padding: 0 30px 80px;
-  }
+.movies__button_hide {
+  display: none;
 }
+.movies__error{
+  display: flex;
+  justify-content:center;
+  color: #ffff;
+  margin: 0;
+  text-align: center;
+}
+
 @media screen and (min-width: 320px) and (max-width: 767px) {
-  .movies {
-    padding: 0 14px 80px;
-  }
   .movies__button {
     width: 240px;
   }
