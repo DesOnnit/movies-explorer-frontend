@@ -27,7 +27,6 @@
 git clone https://github.com/DesOnnit/movies-explorer-frontend
 cd movies-explorer-frontend
 npm npm install
-npm run build
 npm run start
 ```
 # [Макет сайта в Figma](https://www.figma.com/file/Q0yVlIPZ6mkXBvvgfOCqdw/?node-id=891%3A3857)
