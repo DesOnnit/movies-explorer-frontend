@@ -12,7 +12,7 @@
   max-width: 1140px;
 }
 .promo__wall_info {
-  width: 640px;
+  max-width: 640px;
 }
 .promo__title {
   font-style: normal;
